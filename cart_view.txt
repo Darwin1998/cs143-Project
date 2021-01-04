@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSU CS3</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+
+</head>
+<body>
+
+    <div class="row">
+        <div class="col-6 border-right">
+            <form action="{{ route("add-to-cart") }}" method="POST">
+                @csrf
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Product
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (\App\Models\Student::query()->paginate() as $item)
+                            <tr>
+                                <td>
+                                    {{ $item->name }}
+                                </td>
+                                <td>
+                                    <button type="submit" name="product_id" value="{{ $item->id }}" class="btn btn-primary">
+                                        Add to Cart
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </form>
+        </div>
+        <div class="col-6">
+            <form action="{{ route("remove-to-cart") }}" method="POST">
+                @csrf
+                @method("DELETE")
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Products Added
+                            </th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Amount</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($cart as $cartItem)
+                            <tr>
+                                <td>
+                                    {{ \App\Models\Student::find($cartItem["product_id"])->name }}
+                                </td>
+                                <td>
+                                    {{ $cartItem["count"] }}
+                                </td>
+                                <td>
+                                    {{ $cartItem["price"] }}
+                                </td>
+                                <td class="text-right">
+                                    {{ number_format($cartItem["count"] * $cartItem["price"], 2) }}
+                                </td>
+                                <td>
+                                    <button type="submit" name="product_id" value="{{ $cartItem["product_id"] }}"  class="btn btn-danger">x</button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </form>
+
+            <br><br>
+
+            <div class="text-right">
+                <button class="btn btn-warning">RESET</button>
+                <button
+
+                    @if(count($cart) == 0) disabled @endif
+
+                    class="btn btn-success">Checkout</button>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

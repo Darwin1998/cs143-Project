@@ -1,0 +1,89 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Controller as BaseController;
+
+class Controller extends BaseController
+{
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    public function test()
+    {
+        $cart = session("cart", []);
+
+        $total = collect($cart)->sum(function($item) {
+
+        });
+
+
+        return view("meta", [
+            "cart" => $cart
+        ]);
+    }
+
+    public function addToCart(Request $request)
+    {
+        //Process herr
+
+        $productId = $request->product_id;
+
+        $cart = session("cart", []);
+
+        // $cart = [
+        //     [
+        //         "product_id" => 1,
+        //         "count" => 1
+        //     ]
+        // ];
+
+        $found = false;
+
+        foreach ($cart as &$item) {
+            if ($item["product_id"] == $productId) {
+                $item["count"]++;
+                $found = true;
+            }
+        }
+
+        if ($found == false) {
+            $cart[] =  [
+                "product_id" => $productId,
+                "count" => 1,
+                "price" => rand(10, 1000)
+            ];
+        }
+
+
+        session()->put("cart", $cart);
+
+
+        return redirect()->route("test");
+    }
+
+
+    public function removeToCart(Request $request)
+    {
+
+        //Process herr
+        $productId = $request->product_id;
+
+        $cart = session("cart", []);
+
+
+        foreach ($cart as $index => $item) {
+            if ($item["product_id"] == $productId) {
+                unset($cart[$index]);
+            }
+        }
+
+
+        session()->put("cart", $cart);
+
+        return redirect()->route("test");
+    }
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Vue.js Tutorial</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.1/dist/css/bootstrap.css" rel="stylesheet"/>
+    <style>
+    
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pouchdb@7.0.0/dist/pouchdb.min.js"></script>
+</head>
+<body>
+    
+    <div id="app">
+        <div class="container">
+            <h1>{{ title }}</h1>
+            <p>
+                <input type="file" id="file" @change="upload"/>
+            </p>
+            <div class="row">
+                <div v-for="item in items" :key="item._id" class="col-md-3">
+                    <img :src="'data:'+item._attachments.filename.content_type+';charset=utf-8;base64,'+item._attachments.filename.data" width="100%"/>
+                    <p class="text-center"><button @click="destroy(item)" class="btn btn-danger">Delete</button></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        window.db = new PouchDB('test')
+        
+        var app = new Vue({
+            el: '#app',
+            data: {
+                title: 'Upload PouchDB and Vue.js',
+                items: []
+            },
+            created: function () {
+                this.view()
+            },
+            methods: {
+                view: function () {
+                    let vm = this
+                    db.allDocs({
+                        include_docs: true,
+                        attachments: true
+                    }).then(function(response){
+                        for(var i = 0; i < response.rows.length; i++){
+                            vm.items.push(response.rows[i].doc)
+                            console.log(response.rows[i].doc)
+                        }
+                    }).catch(function(error){
+                        console.log(error)
+                    })
+                },
+                upload: function () {
+                    let input = document.getElementById('file')
+                    let file = input.files[0]
+                    
+                    db.post({
+                        _attachments: {
+                            filename: {
+                                content_type: file.type,
+                                data: file
+                            }
+                        }
+                    }).then(function(response){
+                        input.value = ""
+                        swal('Added', 'Berhasil tambah gambar baru', 'success')
+                        window.location.reload()
+                    }).catch(function(error){
+                        console.log(error)
+                    })
+                },
+                destroy: function (item) {
+                    var del = this.items.indexOf(item)
+                    swal({
+                        title: 'Deleted',
+                        text: 'Are you sure',
+                        icon: 'error',
+                        buttons: true,
+                        dangerMode: true
+                    }).then((willDelete) => {
+                        if(willDelete){
+                            this.items.splice(del, 1)
+                            db.get(item._id).then(function(doc){
+                                return db.remove(doc)
+                            }).then(function(response){
+                                
+                            }).catch(function(error){
+                                console.log(error)
+                            })
+                        } else{
+                            
+                        }
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

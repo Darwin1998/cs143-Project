@@ -1,0 +1,4 @@
+Route::get('', "Controller@test")->name("test");
+
+Route::post("add-to-cart", "Controller@addToCart")->name("add-to-cart");
+Route::delete("remove-to-cart", "Controller@removeToCart")->name("remove-to-cart");
