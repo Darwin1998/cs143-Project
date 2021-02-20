@@ -19,7 +19,6 @@ class CreateTransactionsTable extends Migration
             $table->dateTime('date');
             $table->decimal('total_amount',10,2);
             $table->enum('status',['completed','reserved','cancelled'])->default('completed');
-            $table->dateTime('reserved_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->dateTime('completed_at')->default(DB::raw('CURRENT_TIMESTAMP'));
 
         });
