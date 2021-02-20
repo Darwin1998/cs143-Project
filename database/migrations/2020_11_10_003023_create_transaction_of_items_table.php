@@ -15,7 +15,9 @@ class CreateTransactionOfItemsTable extends Migration
     {
         Schema::create('transaction_of_items', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBiginteger('transaction_id');
             $table->bigInteger('product_id');
+            $table->string('product_name');
             $table->bigInteger('quantity');
             $table->decimal('product_price',10,2);
             $table->decimal('item_total',10,2);

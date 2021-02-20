@@ -30,7 +30,7 @@ class ProductController extends Controller
             
         ]);
 
-        $product = \App\Product::create($data);
+        Product::create($data);
         return redirect('/products');
     }
 

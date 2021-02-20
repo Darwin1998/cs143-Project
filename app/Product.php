@@ -19,7 +19,7 @@ class Product extends Model
         return $this->inventories()->sum("count");
     }
 
-    public function transactions()
+    public function transactionofItem()
     {
         return $this->hasMany(TransactionOfItem::class);
     }

@@ -1,11 +1,14 @@
 @extends('layouts.admin')
 @section('content')
+<link rel="stylesheet" type="text/css" href="/js/jquery.datetimepicker.css" >
  <div class="card border-dark mb-3 d-flex justify-content-center" style="max-width: 18rem; margin-left: 500px">
   <div class="card-header">Product Details</div>
   <div class="card-body text-dark">
+
     <h5 class="card-title">{{$product->name}}</h5>
     <p class="card-text">Remaining Stock: {{$product->inventories()->sum('count')}}</p>
     <p class="card-text">Price: {{$product->price}}</p>
+
 
      <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal">
   Edit
@@ -102,13 +105,15 @@
 
                                 <div class="form-group">
                                     <label for="date_time">Date</label>
-                                    <input name="date_time"
-                                        type="text"
-                                        class="form-control"
-                                        id="date_time"
-                                        aria-describedby="namehelp"
+                                    <input name="date_time"id="datetimepicker" type="text" autocomplete="off">
+                                    <script src="/js/jquery.js"></script>
+                                    <script src="/js/build/jquery.datetimepicker.full.min.js"></script>
+                                    <script>
+                                       jQuery('#datetimepicker').datetimepicker({
+                                            format:'Y-m-d h:i:s A',
 
-                                       >
+                                            });
+                                    </script>
 
                                     @error('date')
                                         <small class="text-danger">{{$message}}</small>
@@ -120,9 +125,9 @@
                                         type="text"
                                         class="form-control"
                                         id="count"
-                                        aria-describedby="counthelp"
+                                        aria-describedby="counthelp">
 
-                                        >
+
 
                                     @error('count')
                                         <small class="text-danger">{{$message}}</small>
@@ -173,5 +178,16 @@
     </tbody>
 
   </table>
-
 @endsection
+<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>-->
+
+@section('scripts')
+<script src="/js/jquery.js"></script>
+<script src="/js/build/jquery.datetimepicker.full.min.js"></script>
+<script>
+    jQuery('#datetimepicker').datetimepicker();
+</script>
+@endsection
+
+
+

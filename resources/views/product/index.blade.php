@@ -16,69 +16,6 @@
                  <!-- Button trigger modal -->
 
 
-<!-- Modal  for adding product, built in javascript-->
-<div class="modal fade" id="AddproductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add product</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    <form action="/products" method="POST" id="product">
-      <div class="modal-body">
-        <div class="card-body">
-
-
-                        @csrf
-
-                         <div class="form-group">
-                            <label for="name">Product Name</label>
-                            <input name="name"
-                                   type="text"
-                                   class="form-control"
-                                   id="name"
-                                   aria-describedby="namehelp"
-                                   placeholder="Enter product name"
-                                   value = "{{old('name')}}">
-
-                            @error('name')
-                                <small class="text-danger">{{$message}}</small>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="price">Product price</label>
-                            <input name="price"
-                                   type="text"
-                                   class="form-control"
-                                   id="price"
-                                   aria-describedby="pricehelp"
-                                   placeholder="Enter price"
-                                   value = "{{old('price')}}">
-
-                            @error('price')
-                                <small class="text-danger">{{$message}}</small>
-                            @enderror
-                        </div>
-
-                    <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
-                </div>
-
-
-                </div>
-
-      </div>
-    </form>
-    </div>
-  </div>
-</div>
-
-
-
-
 
                 <div class="card-body">
 
@@ -89,7 +26,7 @@
                                     <thead>
                                         <tr>
                                             <th></th>
-                                            <th style="text-align: center">
+                                            <th style="text-align: left">
                                                 Name
                                             </th>
                                             <th style="text-align: center">
@@ -132,5 +69,63 @@
 
     </div>
 </div>
+<!-- Modal  for adding product, built in javascript-->
+<div class="modal fade" id="AddproductModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      <form action="/products" method="POST" id="product">
+        <div class="modal-body">
+          <div class="card-body">
 
+
+                          @csrf
+
+                           <div class="form-group">
+                              <label for="name">Product Name</label>
+                              <input name="name"
+                                     type="text"
+                                     class="form-control"
+                                     id="name"
+                                     aria-describedby="namehelp"
+                                     placeholder="Enter product name"
+                                     value = "{{old('name')}}">
+
+                              @error('name')
+                                  <small class="text-danger">{{$message}}</small>
+                              @enderror
+                          </div>
+                          <div class="form-group">
+                              <label for="price">Product price</label>
+                              <input name="price"
+                                     type="text"
+                                     class="form-control"
+                                     id="price"
+                                     aria-describedby="pricehelp"
+                                     placeholder="Enter price"
+                                     value = "{{old('price')}}">
+
+                              @error('price')
+                                  <small class="text-danger">{{$message}}</small>
+                              @enderror
+                          </div>
+
+                      <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+
+
+                  </div>
+
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
 @endsection
