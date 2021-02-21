@@ -60,9 +60,12 @@
       </table>
                         <p>Amount to pay: <h3>{{$total}}</h3></p>
                         <div class="text-right">
-                        <a href="#" class="btn btn-warning"> Reserve</a>
-                        <button class="btn btn-success" type="submit">@if(count($cart) == 0) disabled @endif
-                            Place Order</button>
+
+                            <button class="btn btn-warning" name="status"value="reserve" type="submit">
+                                Reserve Order
+                            </button>
+                            <button class="btn btn-success"  name="complete"type="submit">@if(count($cart) == 0) disabled @endif
+                                Place Order</button>
 
 
                     </form>

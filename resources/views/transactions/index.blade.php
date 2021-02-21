@@ -9,16 +9,17 @@
                 <div class="card mt-8">
                     <div class="card-header" style="text-align: center">
                         <h3>Transactions</h3>
-                        <a href="{{ route('create') }}" class="btn btn-primary justify-content-right"> Add Transaction</a>
+                        <a href="{{ route('create') }}" class="btn btn-primary btn-lg float-right btn-sm"> New Transaction</a>
                     </div>
 
                     <div class="card-body">
-                        <table class="table">
+                        <table class="table striped" s>
                             <thead class="thead-dark">
                                   <tr>
                                     <th>Date</th>
                                     <th>OR#</th>
                                     <th>Item Total</th>
+                                    <th>Status</th>
                                     <th></th>
                                   </tr>
                             </thead>
@@ -38,7 +39,13 @@
                                             {{$t->total_amount}}
                                         </td>
                                         <td>
-                                            <a href="/transactions/{{$t->id}}/details" class="btn btn-success">View</a>
+                                            <span class="@if($t->status == "reserved") badge badge-warning
+                                                        @elseif($t->status == "completed")badge badge-success
+                                                        @elseif($t->status == "cancelled")badge badge-danger @endif" >
+                                                {{$t->status}}
+                                        </td>
+                                        <td>
+                                            <a href="/transactions/{{$t->id}}/details" class="btn btn-outline-dark btn-sm">View</a>
                                         </td>
 
                                     </tr>

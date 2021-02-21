@@ -19,7 +19,7 @@
             <td>{{ $user->first_name }}</td>
             <td>{{ $user->position }}</td>
             <td>
-                <button 
+                <button
                         data-user-email="{{ $user->email }}"
                         data-user-password="{{ $user->password }}"
                         data-user-first_name="{{ $user->first_name }}"
@@ -27,7 +27,7 @@
                         data-user-position="{{ $user->position }}"
                         data-user-id="{{ $user->id }}"
                         class="btn btn-primary edit-button">Edit
-                    
+
                 </button>
             </td>
         </tr>
@@ -147,7 +147,7 @@
             $(`#UserModal input[name="password"]`).val(password);
             $(`#UserModal input[name="first_name"]`).val(first_name);
             $(`#UserModal input[name="last_name"]`).val(last_name);
-            
+
 
             $("#UserModal .modal-title").html("Edit User")
 

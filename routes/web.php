@@ -55,16 +55,27 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-   
-    Route::get('/transactions/create','TransactionController@create')->name('create');
-   
-    Route::post('/transactions ', 'TransactionController@addToCart')->name("addToCart");
-    Route::delete('/transactions', 'TransactionController@removefromCart')->name("removefromCart");
-    Route::get('/transactions/checkout', 'TransactionController@checkout')->name("chekcout");
-    Route::post('/transactions/payment ', 'TransactionController@payment')->name("payment");
 
     Route::get('/transactions','TransactionController@index')->name('index');
+
+    Route::get('/transactions/create','TransactionController@create')->name('create');
+
+    Route::post('/transactions ', 'TransactionController@addToCart')->name("addToCart");
+
+    Route::delete('/transactions', 'TransactionController@removefromCart')->name("removefromCart");
+
+    Route::get('/transactions/checkout', 'TransactionController@checkout')->name("chekcout");
+
+    Route::post('/transactions/payment ', 'TransactionController@payment')->name("payment");
+
     Route::get('/transactions/{transaction}/details','TransactionController@details');
+
+    Route::put('/transactions/{transaction}/cancel','TransactionController@cancel')->name("cancel");
+
+    Route::put('/transactions/{transaction}/complete','TransactionController@complete')->name("complete");
+
+
+
 
 
 });

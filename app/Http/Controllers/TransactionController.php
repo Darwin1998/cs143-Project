@@ -38,7 +38,32 @@ class TransactionController extends Controller
     }
 
 
+    public function cancel(Transaction $transaction)
+    {
 
+        $details = [
+
+          'status'=> 'cancelled'
+
+        ];
+        $transaction->update($details);
+
+
+
+    }
+    public function complete(Transaction $transaction)
+    {
+
+        $details = [
+
+          'status'=> 'completed'
+
+        ];
+        $transaction->update($details);
+
+
+
+    }
 
    public function addToCart(Request $request)
    {
@@ -117,10 +142,12 @@ class TransactionController extends Controller
         $total = collect($cart)->sum(function($item) { //traverse session and get the sum
             return $item['item_total'];
         });
+        $status = $request->status == 'reserve'? 'reserved': 'completed';
         $details = [
           "date" => Carbon::now(),
           "OR_number"=> $this->generateOR(),
           'total_amount' => $total,
+          'status'=> $status
 
         ];
         $transaction = Transaction::create($details);
