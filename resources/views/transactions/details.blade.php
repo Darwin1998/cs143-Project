@@ -30,7 +30,7 @@
                 </tr>
                 @endforeach
                 <tr>
-                    <td><h6>Total Amount paid:  {{$transaction->total_amount}}</h6></td>
+                    <td><h6>Total Amount paid:  {{$transaction->status == 'cancelled'?'Cancelled':$transaction->total_amount}}</h6></td>
                 </tr>
             </tbody>
         </table>
