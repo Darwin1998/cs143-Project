@@ -107,7 +107,7 @@
                 </table>
                <p>Total: <h3>{{$total}}</h3></p>
                 <div class="text-right">
-                   
+
 
                     <a  href="/transactions/checkout"
 

@@ -14,6 +14,33 @@
     }
 
   </style>
+<div class="card" style="width: 30rem;">
+    <div class="card-body">
+      <h5 class="card-title">Customers</h5>
+
+        <table class="table borderless">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Contact</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($customers as $c)
+                <tr>
+                    <td ><input type="text" id="customerName" value="{{$c->name}}"></td>
+                    <td>{{$c->contact_number}}</td>
+                    <td><button class="btn btn-primary" name="customerID" value="{{$c->id}}">select</button></td>
+                </tr>
+                @endforeach
+
+            </tbody>
+        </table>
+        <input type="text" id="customer" style="border: 0px" >
+
+    </div>
+  </div>
 <div class="col-sm-10">
     <div class="card">
       <div class="card-header"><h4 style="text-align: center">Cart</h4></div>

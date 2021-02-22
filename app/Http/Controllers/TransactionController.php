@@ -34,8 +34,9 @@ class TransactionController extends Controller
         });
 
         $products = Product::query()->paginate(5);//query for all products available
-        $customer = Customer::query();
-        return view('transactions.cart', compact('products','cart','total','customer'));
+
+
+        return view('transactions.cart', compact('products','cart','total'));
     }
 
 
@@ -71,6 +72,7 @@ class TransactionController extends Controller
        $productID = $request->product_id;
        $productName = $request->product_name;
        $productPrice = $request->product_price;
+
        $cart = session("cart",[]);
 
        $found = false;
@@ -79,7 +81,7 @@ class TransactionController extends Controller
        {
            if($item["product_id"] == $productID)
            {
-               $item["quantity"]++;
+               $item["quantity"] ++;
                $item["item_total"]=$item["quantity"] * $item["product_price"];
                $found = true;
 
@@ -94,6 +96,8 @@ class TransactionController extends Controller
             "quantity" => 1,
             "product_price" => $productPrice,
             "item_total" => $productPrice,
+
+
 
 
 
@@ -133,9 +137,9 @@ class TransactionController extends Controller
         $total = collect($cart)->sum(function($item) { //traverse session and get the sum
             return $item['item_total'];
         });
+        $customers = Customer::query()->paginate(5);
 
-
-        return view('transactions.checkout', compact('cart','total',));
+        return view('transactions.checkout', compact('cart','total','customers'));
     }
     public function payment(Request $request)
     {
@@ -148,7 +152,8 @@ class TransactionController extends Controller
           "date" => Carbon::now(),
           "OR_number"=> $this->generateOR(),
           'total_amount' => $total,
-          'status'=> $status
+          'status'=> $status,
+
 
         ];
         $transaction = Transaction::create($details);
