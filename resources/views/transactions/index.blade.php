@@ -12,12 +12,15 @@
                         <a href="{{ route('create') }}" class="btn btn-primary btn-lg float-right btn-sm"> New Transaction</a>
                     </div>
 
+                        <p></p>
+
                     <div class="card-body">
                         <table class="table striped" s>
                             <thead class="thead-dark">
                                   <tr>
                                     <th>Date</th>
                                     <th>OR#</th>
+                                    <th>Customer</th>
                                     <th>Item Total</th>
                                     <th>Status</th>
                                     <th></th>
@@ -25,15 +28,21 @@
                             </thead>
                             <tbody>
 
-                                @foreach($transactions as $t)
 
+                                @foreach($transactions as $t)
                                     <tr>
+
+
+
                                         <td>
 
                                             {{$t->date}}
                                         </td>
                                         <td>
                                             {{$t->OR_number}}
+                                        </td>
+                                        <td>
+                                            {{!empty($t->customer['name']) ? $t->customer['name']:'N/A'}}
                                         </td>
                                         <td>
                                             {{$t->total_amount}}

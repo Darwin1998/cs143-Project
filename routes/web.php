@@ -64,6 +64,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/transactions/payment ', 'TransactionController@payment')->name("payment");
     Route::get('/transactions/{transaction}/details','TransactionController@details');
     Route::put('/transactions/{transaction}/cancel','TransactionController@cancel')->name("cancel");
+    Route::post('/transactions/{customer}','TransactionController@selectCustomer')->name('selectCustomer');
+
     Route::put('/transactions/{transaction}/complete','TransactionController@complete')->name("complete");
 
 

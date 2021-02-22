@@ -3,6 +3,7 @@
 namespace App;
 use App\TransactionOfItem;
 use Illuminate\Database\Eloquent\Model;
+use App\Customer;
 
 class Transaction extends Model
 {
@@ -17,6 +18,6 @@ class Transaction extends Model
     }
     public function customer()
     {
-        return $this->belongsTo(Customer::class);
+        return $this->belongsTo(Customer::class, 'customer_id');
     }
 }

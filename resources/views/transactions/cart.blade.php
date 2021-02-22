@@ -1,6 +1,35 @@
 @extends('layouts.admin')
 
 @section('content')
+<div class="card" style="width: 25rem;">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Contact</th>
+                    <th></th>
+                </tr>
+
+            </thead>
+            <tbody>
+
+                @foreach ($customers as $c)
+                    <form action="/transactions/{{$c->id}}" method="POST">
+                        @csrf
+                        <tr>
+                            <td>{{$c->name}}</td>
+                            <td>{{$c->contact_number}}</td>
+                            <td><button name="customerId" class="btn btn-primary" value="{{$c->id}}">select</button></td>
+                        </tr>
+                    </form>
+
+                @endforeach
+
+            </tbody>
+        </table>
+    </div>
+  </div>
 
 <div class="card text-center">
     <div class="card-header">

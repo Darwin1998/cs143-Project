@@ -16,7 +16,10 @@ class TransactionController extends Controller
     public function index()
     {
 
+
         $transactions = Transaction::query()->get();
+
+
         return view('transactions.index',compact('transactions'));
     }
     public function details(Transaction $transaction)
@@ -35,10 +38,9 @@ class TransactionController extends Controller
 
         $products = Product::query()->paginate(5);//query for all products available
 
-
-        return view('transactions.cart', compact('products','cart','total'));
+        $customers = Customer::query()->paginate(5);
+        return view('transactions.cart', compact('products','cart','total','customers'));
     }
-
 
     public function cancel(Transaction $transaction)
     {
@@ -141,6 +143,14 @@ class TransactionController extends Controller
 
         return view('transactions.checkout', compact('cart','total','customers'));
     }
+    public function selectCustomer(Request $request)
+    {
+        $customer = $request->customerId;
+         session()->put('customer',$customer);
+         return redirect()->back();
+    }
+
+
     public function payment(Request $request)
     {
         $cart = session("cart",[]);
@@ -148,11 +158,13 @@ class TransactionController extends Controller
             return $item['item_total'];
         });
         $status = $request->status == 'reserve'? 'reserved': 'completed';
+        $customer = session()->get('customer');
         $details = [
           "date" => Carbon::now(),
           "OR_number"=> $this->generateOR(),
           'total_amount' => $total,
           'status'=> $status,
+          'customer_id' => $customer
 
 
         ];

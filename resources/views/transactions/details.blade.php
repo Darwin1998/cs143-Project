@@ -1,8 +1,10 @@
 @extends('layouts.admin')
 @section('content')
 
-<div class="card">
-    <h5 class="card-header">Transaction Details ({{$transaction->status}})</h5>
+<div class="card float-center" style=" width: 500px">
+    <h5 class="card-header">Transaction Details ({{$transaction->status}}) <br><br>
+        Customer: {{!empty($transaction->customer['name']) ? $transaction->customer['name']:'N/A'}}</h3></h5>
+
     <div class="card-body">
 
 
@@ -10,6 +12,7 @@
         <table class="table">
             <thead>
                 <tr>
+
                     <th>Product</th>
                     <th>Price</th>
                     <th>Quantity</th>
@@ -19,12 +22,16 @@
             <tbody>
                 @foreach ($transaction->transactionitems as $item)
                 <tr>
+
                     <td>{{$item->product_name}}</td>
                     <td>{{$item->product_price}}</td>
                     <td>{{$item->quantity}}</td>
 
                 </tr>
                 @endforeach
+                <tr>
+                    <td><h6>Total Amount paid:  {{$transaction->total_amount}}</h6></td>
+                </tr>
             </tbody>
         </table>
 
