@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Customer;
 use App\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +13,7 @@ use App\Inventory;
 
 class TransactionController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
 
         $transactions = Transaction::query()->get();
@@ -24,7 +25,7 @@ class TransactionController extends Controller
         return view('transactions.details', compact('transaction'));
     }
 
-    public function create(Product $product,Request $request)
+    public function create(Product $product,Request $request, Customer $customer)
     {
         $cart = session("cart",[]);//session data
 
@@ -33,8 +34,8 @@ class TransactionController extends Controller
         });
 
         $products = Product::query()->paginate(5);//query for all products available
-
-        return view('transactions.cart', compact('products','cart','total'));
+        $customer = Customer::query();
+        return view('transactions.cart', compact('products','cart','total','customer'));
     }
 
 
@@ -166,7 +167,7 @@ class TransactionController extends Controller
 
         $request->session()->forget('cart');
 
-        return redirect()->route('home');
+        return redirect('/transactions');
 
 
 

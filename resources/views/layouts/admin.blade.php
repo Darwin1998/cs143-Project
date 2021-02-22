@@ -35,6 +35,9 @@
         <a class="nav-link " href="/salesreport">Sales Report</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link " href="/customers">Customer</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link " href="{{ route('logout') }}">Log Out</a>
       </li>
     </ul>

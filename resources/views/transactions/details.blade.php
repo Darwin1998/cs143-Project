@@ -70,7 +70,7 @@ $(document).ready(function () {
             data: {
                 _token: "{{ csrf_token() }}",
 
-                status: 'cancelled'
+                status: 'completed'
             },
             success: function (response) {
 
