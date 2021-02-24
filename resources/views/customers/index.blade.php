@@ -217,9 +217,10 @@
                 method: selectedCustomerId == null ? "POST" : "PUT",
                 data: {
                     _token: "{{ csrf_token() }}",
-                    name: name,
+
                     address: address,
-                    contact_number: contact
+                    contact_number: contact,
+                    name: name,
 
                 },
                 success: function (response) {
