@@ -11,10 +11,11 @@
                     <table class="table table-borderless">
                         <tbody>
                             <tr>
-                                <form action="/search" method="POST" role="search">
+                                <form action="/search" method="GET" role="search">
+                                    @csrf
                                     <td>
 
-                                            @csrf
+
                                             <div class="inner-addon right-addon">
                                                 <i class="fa fa-search text-warning"></i>
                                                 <input style="width: 420px" type="text" name="q" placeholder="Search customer..."
