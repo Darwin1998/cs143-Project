@@ -1,43 +1,58 @@
 @extends('layouts.admin')
 
 @section('content')
+<div class="row d-flex justify-content-center">
+  <div class="col-md-6">
+    <div class="card">
+        <div class="card-header">
+            <h4 style="text-align: center">Users</h4>
+            <!-- Button trigger modal -->
+            <button id="new-user-button" type="button" class="btn btn-primary float float-right" data-toggle="modal" data-target="#UserModal">
+                New User
+            </button>
+        </div>
+        <div class="card-body">
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
 
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Position</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
+                @forelse($users as $user)
+                    <tr>
+                        <td>{{ $user->first_name }}</td>
+                        <td>{{ $user->position }}</td>
+                        <td>
+                            <button
+                                    data-user-email="{{ $user->email }}"
+                                    data-user-password="{{ $user->password }}"
+                                    data-user-first_name="{{ $user->first_name }}"
+                                    data-user-last_name="{{ $user->last_name }}"
+                                    data-user-position="{{ $user->position }}"
+                                    data-user-id="{{ $user->id }}"
+                                    class="btn btn-primary edit-button">Edit
 
+                            </button>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="3">No data</td>
+                    </tr>
+                @endforelse
+                </tbody>
+            </table>
 
-    @forelse($users as $user)
-        <tr>
-            <td>{{ $user->first_name }}</td>
-            <td>{{ $user->position }}</td>
-            <td>
-                <button
-                        data-user-email="{{ $user->email }}"
-                        data-user-password="{{ $user->password }}"
-                        data-user-first_name="{{ $user->first_name }}"
-                        data-user-last_name="{{ $user->last_name }}"
-                        data-user-position="{{ $user->position }}"
-                        data-user-id="{{ $user->id }}"
-                        class="btn btn-primary edit-button">Edit
-
-                </button>
-            </td>
-        </tr>
-    @empty
-        <tr>
-            <td colspan="3">No data</td>
-        </tr>
-    @endforelse
-    </tbody>
-</table>
+        </div>
+    </div>
+  </div>
+</div>
 
 
 
@@ -51,10 +66,7 @@
 
 
 
-  <!-- Button trigger modal -->
-<button id="new-user-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#UserModal">
-    New User
-  </button>
+
 
   <!-- Modal -->
   <div class="modal fade" name="UserModal" id="UserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

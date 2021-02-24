@@ -2,46 +2,104 @@
 
 @section('content')
 
+<div class="row d-flex justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h5 style="text-align: center">Customers</h5>
+                <div class="ml-auto">
+                    <table class="table table-borderless">
+                        <tbody>
+                            <tr>
+                                <form action="/search" method="POST" role="search">
+                                    <td>
 
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th>Name</th>
-        <th>Address</th>
-        <th>Contact</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
+                                            @csrf
+                                            <div class="inner-addon right-addon">
+                                                <i class="fa fa-search text-warning"></i>
+                                                <input style="width: 420px" type="text" name="q" placeholder="Search customer..."
+                                                    class="form-control"/><span class="input-group-btn">
 
 
-    @forelse($customers as $customer)
-        <tr>
-            <td>{{ $customer->name }}</td>
-            <td>{{ $customer->address }}</td>
-            <td>{{ $customer->contact_number}}</td>
-            <td>
-                <button
-                        data-customer-name="{{ $customer->name }}"
-                        data-customer-address="{{ $customer->address }}"
-                        data-customer-contact="{{ $customer->contact_number }}"
+                                            </div>
+                                            <button  type="submit" style="inline-block" class="btn btn-primary float float-left">
+                                                Search
+                                            </button>
 
-                        data-customer-id="{{ $customer->id }}"
-                        class="btn btn-primary edit-button">Edit
-
-                </button>
-            </td>
-        </tr>
-    @empty
-        <tr>
-            <td colspan="3">No data</td>
-        </tr>
-    @endforelse
-    </tbody>
-</table>
+                                    </td>
+                                </form>
+                                <td>
+                                    <button id="new-customer-button" type="button" class="btn btn-primary float float-right" data-toggle="modal" data-target="#CustomerModal">
+                                        New Customer
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
 
 
+                <!-- Button trigger modal -->
+
+
+            </div>
+            <div class="card-body">
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Contact</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+
+                    @forelse($customers as $customer)
+                        <tr>
+                            <td>{{ $customer->name }}</td>
+                            <td>{{ $customer->address }}</td>
+                            <td>{{ $customer->contact_number}}</td>
+                            <td>
+                                <button
+                                        data-customer-name="{{ $customer->name }}"
+                                        data-customer-address="{{ $customer->address }}"
+                                        data-customer-contact="{{ $customer->contact_number }}"
+
+                                        data-customer-id="{{ $customer->id }}"
+                                        class="btn btn-primary edit-button">Edit
+
+                                </button>
+                                <button
+                                        data-customer-name="{{ $customer->name }}"
+                                        data-customer-address="{{ $customer->address }}"
+                                        data-customer-contact="{{ $customer->contact_number }}"
+
+                                        data-customer-id="{{ $customer->id }}"
+                                        class="btn btn-danger delete-button">Delete
+
+                                </button>
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3">No data</td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+                {{$customers->links()}}
+
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -52,10 +110,10 @@
 
 
 
-  <!-- Button trigger modal -->
-<button id="new-customer-button" type="button" class="btn btn-primary" data-toggle="modal" data-target="#CustomerModal">
-    New Customer
-  </button>
+
+
+
+
 
   <!-- Modal -->
   <div class="modal fade" name="CustomerModal" id="CustomerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -68,6 +126,7 @@
           </button>
         </div>
         <div class="modal-body">
+            <div id="success-container"></div>
             <div id="error-container"></div>
                 <div class="form-row">
                   <div class="form-group col-md-6">
@@ -104,7 +163,7 @@
 
             selectedCustomerId = null;
 
-            $("#UserModal .modal-title").html("New User")
+            $("#CustomerModal .modal-title").html("New Customer")
 
 
             $("#error-container").html("")
@@ -134,7 +193,7 @@
 
 
 
-            $("#CustomerModal .modal-title").html("Edit User")
+            $("#CustomerModal .modal-title").html("Edit Customer")
 
             $("#error-container").html("")
 
@@ -163,7 +222,13 @@
 
                 },
                 success: function (response) {
+                    let html = "<div class = 'alert aler-success'> Customer added!<div>";
+                    $("#success-container").html(html);
+                    alert('Customer added!');
+
                     $("#CustomerModal").modal("hide");
+
+
                     document.location.reload();
                 },
                 error: function (e) {

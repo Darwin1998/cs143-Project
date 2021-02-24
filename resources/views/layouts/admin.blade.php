@@ -11,7 +11,10 @@
 
 </head>
 <body>
+    @php
+        $user = Auth::user();
 
+    @endphp
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="#">CS143 Computer Shop</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,26 +26,40 @@
 
 
       <li class="nav-item">
-        <a class="nav-link " href="/products">Product Management</a>
+        <a class="nav-link " href="/products" @if ($user->position == 'cashier')
+            style="visibility: hidden;"
+        @endif>Product Management</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="/users">Users</a>
+        <a class="nav-link " href="/users"  @if ($user->position == 'cashier')
+            style="visibility: hidden;"
+        @endif>Users</a>
       </li>
       <li class="nav-item">
         <a class="nav-link " href="/transactions">Transactions</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="/salesreport">Sales Report</a>
+        <a class="nav-link " href="/salesreport" @if ($user->position == 'cashier')
+            style="visibility: hidden;"
+        @endif>Sales Report</a>
       </li>
       <li class="nav-item">
         <a class="nav-link " href="/customers">Customer</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link " href="{{ route('logout') }}">Log Out</a>
-      </li>
+
     </ul>
 
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{$user->first_name}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="nav-link " href="{{ route('logout') }}">Log Out</a>
+        </div>
+      </div>
+
   </div>
+
 </nav>
  @yield('content')
 

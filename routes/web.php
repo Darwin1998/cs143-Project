@@ -21,57 +21,68 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 
-
 //Auth::routes();
 
-
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/users', 'UserController@index')->name('index');
-    Route::post('/users', 'UserController@store')->name('store');
-    Route::put('users/{user}','UserController@update')->name('update');
 
-
+    Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/logout','ApplicationController@logout')->name('logout');
 
     Route::get('/', function () {
         return view('welcome');
     });
 
-    Route::get('/home', 'HomeController@index')->name('home');
 
 
-    Route::get('/products', 'ProductController@index');
-    Route::get('/products/create','ProductController@create');
-    Route::post('/products','ProductController@store');
-    Route::get('/products/{product}','ProductController@show')->name('products.show');
-    Route::get('/products/{product}/edit','ProductController@edit');
-    Route::put('/products/{product}','ProductController@update');
-
-
-    Route::get('/inventories', 'InventoryController@index');
-    Route::post('/products/{product}','InventoryController@store');
+    Route::group(['middleware'=>'common'], function(){
 
 
 
+        Route::get('/transactions','TransactionController@index')->name('index');
+        Route::get('/transactions/create','TransactionController@create')->name('create');
+        Route::post('/transactions ', 'TransactionController@addToCart')->name("addToCart");
+        Route::delete('/transactions', 'TransactionController@removefromCart')->name("removefromCart");
+        Route::get('/transactions/checkout', 'TransactionController@checkout')->name("chekcout");
+        Route::post('/transactions/payment ', 'TransactionController@payment')->name("payment");
+        Route::get('/transactions/{transaction}/details','TransactionController@details');
+        Route::put('/transactions/{transaction}/cancel','TransactionController@cancel')->name("cancel");
+        Route::post('/transactions/{customer}','TransactionController@selectCustomer')->name('selectCustomer');
+
+        Route::put('/transactions/{transaction}/complete','TransactionController@complete')->name("complete");
+
+
+        Route::get('/customers','CustomerController@index')->name('index');
+        Route::post('/customers', 'CustomerController@store')->name('store');
+        Route::put('customers/{customer}','CustomerController@update')->name('update');
+    });
 
 
 
-    Route::get('/transactions','TransactionController@index')->name('index');
-    Route::get('/transactions/create','TransactionController@create')->name('create');
-    Route::post('/transactions ', 'TransactionController@addToCart')->name("addToCart");
-    Route::delete('/transactions', 'TransactionController@removefromCart')->name("removefromCart");
-    Route::get('/transactions/checkout', 'TransactionController@checkout')->name("chekcout");
-    Route::post('/transactions/payment ', 'TransactionController@payment')->name("payment");
-    Route::get('/transactions/{transaction}/details','TransactionController@details');
-    Route::put('/transactions/{transaction}/cancel','TransactionController@cancel')->name("cancel");
-    Route::post('/transactions/{customer}','TransactionController@selectCustomer')->name('selectCustomer');
 
-    Route::put('/transactions/{transaction}/complete','TransactionController@complete')->name("complete");
+    Route::group(['middleware' => 'admin'],function(){
 
 
-    Route::get('/customers','CustomerController@index')->name('index');
-    Route::post('/customers', 'CustomerController@store')->name('store');
-    Route::put('customers/{customer}','CustomerController@update')->name('update');
+        Route::get('/users', 'UserController@index')->name('index');
+        Route::post('/users', 'UserController@store')->name('store');
+        Route::put('users/{user}','UserController@update')->name('update');
+
+
+
+        Route::get('/products', 'ProductController@index');
+        Route::get('/products/create','ProductController@create');
+        Route::post('/products','ProductController@store');
+        Route::get('/products/{product}','ProductController@show')->name('products.show');
+        Route::get('/products/{product}/edit','ProductController@edit');
+        Route::put('/products/{product}','ProductController@update');
+
+
+        Route::get('/inventories', 'InventoryController@index');
+        Route::post('/products/{product}','InventoryController@store');
+
+
+
+    } );
+
 
 
 });
