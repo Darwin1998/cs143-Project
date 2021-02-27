@@ -44,11 +44,7 @@
             style="visibility: hidden;"
         @endif>Transactions</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link  btn btn-dark" href="/salesreport" @if ($user->position == 'cashier')
-            style="visibility: hidden;"
-        @endif>Sales Report</a>
-      </li>
+
       <li class="nav-item">
         <a class="nav-link btn btn-dark" href="/customers">Customer</a>
       </li>
