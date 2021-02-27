@@ -61,7 +61,7 @@
 
 
                                 @endforeach
-
+                                    {{$transactions->links()}}
                             </tbody>
 
                         </table>

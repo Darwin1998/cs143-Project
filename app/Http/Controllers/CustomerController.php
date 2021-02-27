@@ -53,9 +53,17 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function search(Request $request)
     {
-        //
+        $customer = null;
+        $q = $request->q;
+        if(!empty($request->q))
+        {
+            $customer = Customer::where('name','LIKE','%'.$q.'%')->get();
+            return view('customers.search',compact('customer'));
+        }
+
+
     }
 
     /**
@@ -96,8 +104,11 @@ class CustomerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Customer $customer)
     {
-        //
+        $customer->delete();
+        return response()->json([
+            "status" => "OK"
+        ]);
     }
 }

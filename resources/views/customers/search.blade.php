@@ -32,9 +32,7 @@
                                 <td>
                                       <!-- Button trigger modal -->
 
-                                    <button id="new-customer-button" type="button" class="btn btn-primary float float-right" data-toggle="modal" data-target="#CustomerModal">
-                                        New Customer
-                                    </button>
+                                    <a href="{{ route('index') }}" class="btn btn-dark"><<< back</a>
                                 </td>
                             </tr>
                         </tbody>
@@ -54,31 +52,31 @@
                         <th>Name</th>
                         <th>Address</th>
                         <th>Contact</th>
-                        <th>Action</th>
+                        <th></th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
 
 
-                    @forelse($customers as $customer)
+                    @forelse($customer as $c)
                         <tr>
-                            <td>{{ $customer->name }}</td>
-                            <td>{{ $customer->address }}</td>
-                            <td>{{ $customer->contact_number}}</td>
+                            <td>{{ $c->name }}</td>
+                            <td>{{ $c->address }}</td>
+                            <td>{{ $c->contact_number}}</td>
                             <td>
                                 <button
-                                        data-customer-name="{{ $customer->name }}"
-                                        data-customer-address="{{ $customer->address }}"
-                                        data-customer-contact="{{ $customer->contact_number }}"
+                                        data-customer-name="{{ $c->name }}"
+                                        data-customer-address="{{ $c->address }}"
+                                        data-customer-contact="{{ $c->contact_number }}"
 
-                                        data-customer-id="{{ $customer->id }}"
+                                        data-customer-id="{{ $c->id }}"
                                         class="btn btn-primary edit-button">Edit
 
                                 </button>
                                 <button
 
-                                        data-customer-id="{{ $customer->id }}"
+                                        data-customer-id="{{ $c->id }}"
                                         class="btn btn-danger delete-button">Delete
 
                                 </button>
@@ -94,7 +92,7 @@
                     @endforelse
                     </tbody>
                 </table>
-                {{$customers->links()}}
+
 
             </div>
         </div>
@@ -182,11 +180,11 @@
                     success: function (response) {
 
                     alert('Customer deleted!');
+                    window.location = "{{route('index')}}";
 
 
 
-
-                    document.location.reload();
+                    ;
                 },
 
 

@@ -106,7 +106,7 @@
                         <option value="admin">Admin</option>
                         <option value="manager">Manager</option>
                         <option value="cashier">Cashier</option>
-                        <option value="user">User</option>
+
                     </select>
                 </div>
                 <button id="save-button"type="submit" class="btn btn-primary save-button">Add</button>

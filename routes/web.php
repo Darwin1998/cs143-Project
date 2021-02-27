@@ -32,6 +32,16 @@ Route::group(['middleware' => 'auth'], function () {
         return view('welcome');
     });
 
+    Route::group(['middleware' => 'manager'], function(){
+
+        Route::get('/users', 'UserController@index')->name('index');
+        Route::post('/users', 'UserController@store')->name('store');
+        Route::put('users/{user}','UserController@update')->name('update');
+
+        Route::get('/inventories', 'InventoryController@index');
+        Route::post('/products/{product}','InventoryController@store');
+
+    });
 
 
     Route::group(['middleware'=>'common'], function(){
@@ -54,6 +64,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/customers','CustomerController@index')->name('index');
         Route::post('/customers', 'CustomerController@store')->name('store');
         Route::put('customers/{customer}','CustomerController@update')->name('update');
+        Route::delete('customers/delete/{customer}','CustomerController@destroy')->name('delete');
+
+        Route::get('/customers/search','CustomerController@search')->name('search');
     });
 
 
@@ -62,9 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'admin'],function(){
 
 
-        Route::get('/users', 'UserController@index')->name('index');
-        Route::post('/users', 'UserController@store')->name('store');
-        Route::put('users/{user}','UserController@update')->name('update');
+
 
 
 
@@ -76,8 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/products/{product}','ProductController@update');
 
 
-        Route::get('/inventories', 'InventoryController@index');
-        Route::post('/products/{product}','InventoryController@store');
+
 
 
 

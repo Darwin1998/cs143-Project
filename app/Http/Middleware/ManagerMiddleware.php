@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Middleware;
-
+use Auth;
 use Closure;
 
 class ManagerMiddleware
@@ -15,6 +15,9 @@ class ManagerMiddleware
      */
     public function handle($request, Closure $next)
     {
-        return $next($request);
+        if (Auth::user()->position == "admin"||Auth::user()->position == 'manager') {
+            return $next($request);
+        }
+
     }
 }

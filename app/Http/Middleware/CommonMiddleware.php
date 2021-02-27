@@ -17,6 +17,8 @@ class CommonMiddleware
     {
         if (Auth::user()->position == "admin"||Auth::user()->position == 'cashier') {
             return $next($request);
+        }else{
+            return redirect()->back();
         }
     }
 }

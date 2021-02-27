@@ -17,7 +17,7 @@ class TransactionController extends Controller
     {
 
 
-        $transactions = Transaction::query()->get();
+        $transactions = Transaction::query()->paginate(10);
 
 
         return view('transactions.index',compact('transactions'));
