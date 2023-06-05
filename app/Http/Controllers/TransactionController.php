@@ -36,7 +36,9 @@ class TransactionController extends Controller
             return $item['item_total'];
         });
 
-        $products = Product::query()->paginate(5);//query for all products available
+        $products = Product::whereHas('inventories', function ($query) {
+            $query->where('count', '>', 0);
+        })->paginate(10); //query for all products available
 
         $customers = Customer::query()->paginate(5);
         return view('transactions.cart', compact('products','cart','total','customers'));
@@ -69,11 +71,9 @@ class TransactionController extends Controller
 
     }
 
-   public function addToCart(Request $request)
+   public function addToCart(Request $request, Product $product)
    {
-       $productID = $request->product_id;
-       $productName = $request->product_name;
-       $productPrice = $request->product_price;
+
 
        $cart = session("cart",[]);
 
@@ -81,7 +81,7 @@ class TransactionController extends Controller
 
        foreach($cart as &$item)
        {
-           if($item["product_id"] == $productID)
+           if($item["product_id"] == $product->id)
            {
                $item["quantity"] ++;
                $item["item_total"]=$item["quantity"] * $item["product_price"];
@@ -89,29 +89,22 @@ class TransactionController extends Controller
 
            }
        }
-       if ($found == false)
+       if ($found == false && $product->getCurrentStocksAttribute() > 0)
        {
-           $cart[] = [
+                $cart[] = [
 
-            "product_id" => $productID,
-            "product_name" =>$productName,
-            "quantity" => 1,
-            "product_price" => $productPrice,
-            "item_total" => $productPrice,
-
-
-
-
-
-
-           ];
-
+                    "product_id" => $product->id,
+                    "product_name" =>$product->name,
+                    "quantity" => 1,
+                    "product_price" => $product->price,
+                    "item_total" => $product->price,
+                ];
        }
 
        session()->put("cart",$cart);
 
 
-      return redirect()->route("create");
+      return redirect()->route('transaction.create');
    }
    public function removefromCart(Request $request)
     {
@@ -131,7 +124,7 @@ class TransactionController extends Controller
 
         session()->put("cart", $cart);
 
-        return redirect()->route("create");
+        return redirect()->route("transaction.create");
     }
     public function checkout(Request $request)
     {
@@ -177,22 +170,13 @@ class TransactionController extends Controller
                 "count" => -$c["quantity"],
                 "date_time" => date("Y-m-d h:i:s A")
              ]);
-
         }
-
-
 
         $request->session()->forget('cart');
 
         return redirect('/transactions');
-
-
-
-
-
-
-
     }
+
    public function generateOR()
     {
         $or_number = "OR-" . str_pad( Transaction::count() + 1 , 8, '0', STR_PAD_LEFT);

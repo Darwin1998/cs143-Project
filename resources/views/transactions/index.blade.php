@@ -9,7 +9,7 @@
                 <div class="card mt-8">
                     <div class="card-header" style="text-align: center">
                         <h3>Transactions</h3>
-                        <a href="{{ route('create') }}" class="btn btn-primary btn-lg float-right btn-sm"> New Transaction</a>
+                        <a href="{{ route('transaction.create') }}" class="btn btn-primary btn-lg float-right btn-sm"> New Transaction</a>
                     </div>
 
                         <p></p>

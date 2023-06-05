@@ -40,9 +40,9 @@
 
                         <tr>
 
-                        <td style=": blue"><input readonly type="text" name="productname" value="{{ $cartItem["product_name"] }}"></td>
-                        <td><input readonly type="text" name="productprice"value="{{ $cartItem["product_price"] }}"></td>
-                        <td><input readonly type="text" name="quantity" id="" value="{{ $cartItem["quantity"]}}"></td>
+                        <td style=": blue"> {{ $cartItem["product_name"] }} </td>
+                        <td>{{ $cartItem["product_price"] }}</td>
+                        <td>{{ $cartItem["quantity"]}}</td>
 
                         <td class="text-right"><input readonly type="text" style="margin-right: 150px"value="{{$cartItem["item_total"]}}"></td>
 
@@ -65,7 +65,7 @@
                             <button class="btn btn-warning" name="status"value="reserve" type="submit">
                                 Reserve Order
                             </button>
-                            <button class="btn btn-success"  name="complete"type="submit">@if(count($cart) == 0) disabled @endif
+                            <button class="btn btn-success"  name="complete" type="submit">@if(count($cart) == 0) disabled @endif
                                 Place Order</button>
 
 

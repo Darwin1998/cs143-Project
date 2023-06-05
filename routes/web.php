@@ -48,15 +48,15 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-        Route::get('/transactions','TransactionController@index')->name('index');
-        Route::get('/transactions/create','TransactionController@create')->name('create');
-        Route::post('/transactions ', 'TransactionController@addToCart')->name("addToCart");
-        Route::delete('/transactions', 'TransactionController@removefromCart')->name("removefromCart");
-        Route::get('/transactions/checkout', 'TransactionController@checkout')->name("chekcout");
-        Route::post('/transactions/payment ', 'TransactionController@payment')->name("payment");
-        Route::get('/transactions/{transaction}/details','TransactionController@details');
-        Route::put('/transactions/{transaction}/cancel','TransactionController@cancel')->name("cancel");
-        Route::post('/transactions/{customer}','TransactionController@selectCustomer')->name('selectCustomer');
+        Route::get('/transactions','TransactionController@index')->name('transaction.index');
+        Route::get('/transactions/create','TransactionController@create')->name('transaction.create');
+        Route::post('/transactions/{product} ', 'TransactionController@addToCart')->name("transaction.addToCart");
+        Route::delete('/transactions', 'TransactionController@removefromCart')->name("transaction.removefromCart");
+        Route::get('/transactions/checkout', 'TransactionController@checkout')->name("transaction.chekcout");
+        Route::post('/transactions/payment', 'TransactionController@payment')->name("transaction.payment");
+        Route::get('/transactions/{transaction}/details','TransactionController@details')->name('transaction.details');
+        Route::put('/transactions/{transaction}/cancel','TransactionController@cancel')->name("transaction.cancel");
+        Route::post('/transactions/{customer}','TransactionController@selectCustomer')->name('transaction.selectCustomer');
 
         Route::put('/transactions/{transaction}/complete','TransactionController@complete')->name("complete");
 

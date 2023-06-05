@@ -62,16 +62,18 @@
 
 
                                 @foreach ($products as $product )
-                                    <form action="/transactions" method="POST">
+                                    <form action="/transactions/{{ $product->id }}" method="POST">
                                         @csrf
                                         <tr>
 
-                                            <td ><input name="product_id" type="text" value="{{$product->id}}" style="border: 0px; width: 20px" readonly></td>
-                                            <td><input name="product_name" type="text" value="{{$product->name}}" style="border: 0px;width: 100px" readonly></td>
+                                            <td> {{ $product->id }} </td>
+                                            <td> {{$product->name}} </td>
                                             <td>{{$product->getCurrentStocksAttribute()}}</td>
-                                            <td><input name="product_price"type="text" value="{{$product->price}}" style="border: 0px;width: 50px" readonly></td>
+                                            <td> {{$product->price}} </td>
 
-                                            <td><button class="btn btn-dark" type="submit" name="product_id" value = "{{$product->id}}">Add</button></td>
+                                            <td><button class="btn btn-dark" type="submit" @if ($product->getCurrentStocksAttribute() == 0)
+                                                style="visibility: hidden"
+                                            @endif>Add</button></td>
 
 
                                         </tr>
