@@ -31,31 +31,16 @@
                 </tr>
           </thead>
           <tbody>
-
+            <form action="{{ route('transaction.payment') }}" method="POST">
                 @foreach ($cart as $cartItem )
-                    <form action="/transactions/payment" method="POST">
-
                         @csrf
-
-
                         <tr>
-
                         <td style=": blue"> {{ $cartItem["product_name"] }} </td>
                         <td>{{ $cartItem["product_price"] }}</td>
                         <td>{{ $cartItem["quantity"]}}</td>
-
                         <td class="text-right"><input readonly type="text" style="margin-right: 150px"value="{{$cartItem["item_total"]}}"></td>
-
-
                         </tr>
-
-
-
-
                 @endforeach
-
-
-
           </tbody>
 
       </table>

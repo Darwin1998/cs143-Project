@@ -73,8 +73,6 @@ class TransactionController extends Controller
 
    public function addToCart(Request $request, Product $product)
    {
-
-
        $cart = session("cart",[]);
 
        $found = false;
@@ -142,7 +140,6 @@ class TransactionController extends Controller
          session()->put('customer',$customer);
          return redirect()->back();
     }
-
 
     public function payment(Request $request)
     {
